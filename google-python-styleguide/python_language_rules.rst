@@ -5,36 +5,37 @@ Lint
 --------------------
 
 .. tip::
-    使用该 `pylintrc <https://google.github.io/styleguide/pylintrc>`_ 对你的代码运行pylint
+    使用该 `pylintrc <https://google.github.io/styleguide/pylintrc>`_ 对你的代码运行 ``pylint``。
     
-定义:
-    pylint是一个在Python源代码中查找bug的工具. 对于C和C++这样的不那么动态的(译者注: 原文是less dynamic)语言, 这些bug通常由编译器来捕获. 由于Python的动态特性, 有些警告可能不对. 不过伪告警应该很少.
+定义：
+    ``pylint``  是一个在 Python 源代码中查找 bug 的工具。对于 C 和 C++ 这样的不那么动态的（译者注：原文是 less dynamic）语言，这些 bug 通常由编译器来捕获。由于 Python 的动态特性，有些警告可能不对。不过伪告警应该很少。
     
-优点:
-    可以捕获容易忽视的错误, 例如输入错误, 使用未赋值的变量等.
+优点：
+    可以捕获容易忽视的错误，例如输入错误，使用未赋值的变量等。
     
-缺点:
-    pylint不完美. 要利用其优势, 我们有时侯需要: a) 围绕着它来写代码 b) 抑制其告警 c) 改进它, 或者d) 忽略它.
+缺点：
+    ``pylint``  不完美。要利用其优势，我们有时侯需要：a）围绕着它来写代码 b）抑制其告警 c）改进它，或者d）忽略它。
     
-结论: 
-    确保对你的代码运行pylint.
-    抑制不准确的警告,以便能够将其他警告暴露出来。你可以通过设置一个行注释来抑制警告. 例如:
+结论：
+    确保对你的代码运行 ``pylint``。
+
+    抑制不准确的警告，以便能够将其他警告暴露出来。你可以通过设置一个行注释来抑制警告。例如：
     
     .. code-block:: python
     
         dict = 'something awful'  # Bad Idea... pylint: disable=redefined-builtin
         
-    pylint警告是以符号名(如 ``empty-docstring`` )来标识的.google特定的警告则是以``g-``开头.
+    ``pylint`` 警告是以符号名（如 ``empty-docstring``）来标识的。Google 特定的警告则是以 ``g-`` 开头。
     
     如果警告的符号名不够见名知意，那么请对其增加一个详细解释。
     
-    采用这种抑制方式的好处是我们可以轻松查找抑制并回顾它们.
+    采用这种抑制方式的好处是我们可以轻松查找抑制并回顾它们。
     
-    你可以使用命令 ``pylint --list-msgs`` 来获取pylint告警列表. 你可以使用命令 ``pylint --help-msg=C6409`` , 以获取关于特定消息的更多信息.
+    你可以使用命令 ``pylint --list-msgs`` 来获取 pylint 告警列表。你可以使用命令 ``pylint --help-msg=C6409``，以获取关于特定消息的更多信息。
     
-    相比较于之前使用的 ``pylint: disable-msg`` , 本文推荐使用 ``pylint: disable`` .
+    相比较于之前使用的 ``pylint: disable-msg``，本文推荐使用 ``pylint: disable``。
     
-    在函数体中 ``del`` 未使用的变量可以消除参数未使用告警.记得要加一条注释说明你为何 ``del`` 它们,注释使用"Unused"就可以,例如:
+    在函数体中 ``del`` 未使用的变量可以消除参数未使用告警。记得要加一条注释说明你为何 ``del`` 它们，注释使用 “Unused” 就可以，例如：
     
     .. code-block:: python
     
@@ -42,33 +43,33 @@ Lint
             del beans, eggs  # Unused by vikings.
             return spam + spam + spam        
 
-    其他消除这个告警的方法还有使用`_`标志未使用参数,或者给这些参数名加上前缀 ``unused_``, 或者直接把它们绑定到 ``_``.但这些方法都不推荐.
+    其他消除这个告警的常用方法包括使用 ‘``_``’ 来标记未使用参数，或者给这些参数名加上前缀 ‘``unused_``’，或者直接把它们绑定到 ‘``_``’。但这些方法都不推荐。这些按名称传递参数，并且不强制要求参数的中断调用实际上没有使用。
 
 导入
 --------------------
 
 .. tip::
-    仅对包和模块使用导入,而不单独导入函数或者类。`typing`模块例外。   
+    仅对包和模块使用 ``import``，而不单独导入函数或者类。``typing`` 模块例外。   
 
-定义:
-    模块间共享代码的重用机制.
+定义：
+    模块间共享代码的重用机制。
     
-优点:
-    命名空间管理约定十分简单. 每个标识符的源都用一种一致的方式指示. x.Obj表示Obj对象定义在模块x中.
+优点：
+    命名空间管理约定十分简单。每个标识符的源都用一种一致的方式指示。``x.Obj`` 表示 ``Obj`` 对象定义在模块 ``x`` 中。
     
-缺点:
-    模块名仍可能冲突. 有些模块名太长, 不太方便.
+缺点：
+    模块名仍可能冲突。有些模块名太长，不太方便。
     
-结论:
-    #. 使用 ``import x`` 来导入包和模块. 
+结论：
+    #. 使用 ``import x`` 来导入包和模块。
     
-    #. 使用 ``from x import y`` , 其中x是包前缀, y是不带前缀的模块名.
+    #. 使用 ``from x import y``，其中 ``x`` 是包前缀， ``y`` 是不带前缀的模块名。
+
+    #. 使用 ``from x import y as z``，如果两个要导入的模块都叫做 ``y`` 或者 ``y`` 太长了。
     
-    #. 使用 ``from x import y as z``, 如果两个要导入的模块都叫做y或者y太长了.
+    #. 仅当缩写 ``z`` 是通用缩写时才可使用 ``import y as z``。（比如 ``np`` 代表 ``numpy``。）
     
-    #. 仅当缩写 ``z`` 是通用缩写时才可使用 ``import y as z``.(比如 ``np`` 代表 ``numpy``.)
-    
-    例如, 模块 ``sound.effects.echo`` 可以用如下方式导入:
+    例如，模块 ``sound.effects.echo`` 可以用如下方式导入：
     
     .. code-block:: python
     
@@ -76,9 +77,9 @@ Lint
         ...
         echo.EchoFilter(input, output, delay=0.7, atten=4)
      
-    导入时不要使用相对名称. 即使模块在同一个包中, 也要使用完整包名. 这能帮助你避免无意间导入一个包两次. 
+    导入时不要使用相对名称。即使模块在同一个包中，也要使用完整包名。这能帮助你避免无意间导入一个包两次。 
 
-    导入 ``typing`` 和 `six.moves <https://six.readthedocs.io/#module-six.moves>`_ 模块时可以例外.
+    导入 ``typing`` 和 `six.moves <https://six.readthedocs.io/#module-six.moves>`_ 模块时可以例外。
     
 包
 --------------------
@@ -86,22 +87,22 @@ Lint
 .. tip::
     使用模块的全路径名来导入每个模块    
 
-优点:
-    避免模块名冲突或是因非预期的模块搜索路径导致导入错误. 查找包更容易. 
+优点：
+    避免模块名冲突或是因非预期的模块搜索路径导致导入错误。查找包更容易。
     
-缺点:
-    部署代码变难, 因为你必须复制包层次. 
+缺点：
+    部署代码变难，因为你必须复制包层次。但在如今的部署方法中这并不是问题。
     
 结论:
-    所有的新代码都应该用完整包名来导入每个模块.
+    所有的新代码都应该用完整包名来导入每个模块。
     
-    应该像下面这样导入:  
+    应该像下面这样导入：
 
-    yes:
+    Yes：
     
     .. code-block:: python
     
-        # 在代码中引用完整名称 absl.flags (详细情况).
+        # 在代码中引用完整名称 absl.flags （详细情况）。
         import absl.flags
         from doctor.who import jodie
 
@@ -109,94 +110,94 @@ Lint
 
     .. code-block:: python
 
-        # 在代码中仅引用模块名 flags (常见情况).
+        # 在代码中仅引用模块名 flags （常见情况）。
         from absl import flags
         from doctor.who import jodie
 
         FLAGS = flags.FLAGS
 
-    No: (假设当前文件和 `jodie.py` 都在目录 `doctor/who/` 下)
+    No:（假设当前文件和 ``jodie.py`` 都在目录 ``doctor/who/`` 下）
 
     .. code-block:: python
     
-        # 没能清晰指示出作者想要导入的模块和最终被导入的模块.
-        # 实际导入的模块将取决于 sys.path.
+        # 没能清晰指示出作者想要导入的模块和最终被导入的模块。
+        # 实际导入的模块将取决于 sys.path。
         import jodie
 
-    不应假定主入口脚本所在的目录就在 `sys.path` 中，虽然这种情况是存在的。当主入口脚本所在目录不在 `sys.path` 中时，代码将假设 `import jodie` 是导入的一个第三方库或者是一个名为 `jodie` 的顶层包，而不是本地的 `jodie.py`
+    不应假定主入口脚本所在的目录就在 ``sys.path`` 中，虽然这种情况是存在的。当主入口脚本所在目录不在 ``sys.path`` 中时，代码将假设 ``import jodie`` 是导入的一个第三方库或者是一个名为 ``jodie`` 的顶层包，而不是本地的 ``jodie.py``。
 
 
 异常
 --------------------
 
 .. tip::
-    允许使用异常, 但必须小心
+    允许使用异常, 但必须小心。
  
-定义:
-    异常是一种跳出代码块的正常控制流来处理错误或者其它异常条件的方式. 
+定义：
+    异常是一种跳出代码块的正常控制流来处理错误或者其它异常条件的方式。
     
-优点:
-    正常操作代码的控制流不会和错误处理代码混在一起. 当某种条件发生时, 它也允许控制流跳过多个框架. 例如, 一步跳出N个嵌套的函数, 而不必继续执行错误的代码. 
+优点：
+    正常操作代码的控制流不会和错误处理代码混在一起。当某种条件发生时，它也允许控制流跳过多个框架。例如，一步跳出 N 个嵌套的函数，而不必继续执行错误的代码。
     
-缺点:
-    可能会导致让人困惑的控制流. 调用库时容易错过错误情况. 
+缺点：
+    可能会导致让人困惑的控制流。调用库时容易错过错误情况。
     
-结论:
-    异常必须遵守特定条件:
+结论：
+    异常必须遵守特定条件：
     
-    #. 优先合理的使用内置异常类.比如 ``ValueError`` 指示了一个程序错误, 比如在方法需要正数的情况下传递了一个负数错误.不要使用 ``assert`` 语句来验证公共API的参数值. ``assert`` 是用来保证内部正确性的,而不是用来强制纠正参数使用.若需要使用异常来指示某些意外情况,不要用 ``assert``,用 ``raise`` 语句,例如:
+    #. 优先合理的使用内置异常类。比如 ``ValueError`` 指示了一个程序错误（比如在方法需要正数的情况下传递了一个负数错误）。不要使用 ``assert`` 语句来验证公共 API 的参数值。``assert`` 是用来保证内部正确性的，而不是用来强制纠正参数使用。若需要使用异常来指示某些意外情况，不要用 ``assert``，用 ``raise`` 语句，例如：
         
-        Yes:
-        
-        .. code-block:: python
+    Yes：
+     
+    .. code-block:: python
 
-            def connect_to_next_port(self, minimum):
-                """Connects to the next available port.
+        def connect_to_next_port(self, minimum):
+            """Connects to the next available port.
 
-                Args:
-                    minimum: A port value greater or equal to 1024.
-
-                Returns:
-                    The new minimum port.
-
-                Raises:
-                    ConnectionError: If no available port is found.
-                """
-                if minimum < 1024:
-                    # Note that this raising of ValueError is not mentioned in the doc
-                    # string's "Raises:" section because it is not appropriate to
-                    # guarantee this specific behavioral reaction to API misuse.
-                    raise ValueError(f'Min. port must be at least 1024, not {minimum}.')
-                port = self._find_next_open_port(minimum)
-                if not port:
-                    raise ConnectionError(
-                        f'Could not connect to service on port {minimum} or higher.')
-                assert port >= minimum, (
-                    f'Unexpected port {port} when minimum was {minimum}.')
-                return port
-
-        No:
-
-        .. code-block:: python
-
-            def connect_to_next_port(self, minimum):
-                """Connects to the next available port.
-
-                Args:
+            Args:
                 minimum: A port value greater or equal to 1024.
 
-                Returns:
+            Returns:
                 The new minimum port.
-                """
-                assert minimum >= 1024, 'Minimum port must be at least 1024.'
-                port = self._find_next_open_port(minimum)
-                assert port is not None
-                return port
 
-    #. 模块或包应该定义自己的特定域的异常基类, 这个基类应该从内建的Exception类继承. 模块的异常基类后缀应该叫做 ``Error``.
-    #. 永远不要使用 ``except:`` 语句来捕获所有异常, 也不要捕获 ``Exception`` 或者 ``StandardError`` , 除非你打算重新触发该异常, 或者你已经在当前线程的最外层(记得还是要打印一条错误消息). 在异常这方面, Python非常宽容, ``except:`` 真的会捕获包括Python语法错误在内的任何错误. 使用 ``except:`` 很容易隐藏真正的bug. 
-    #. 尽量减少try/except块中的代码量. try块的体积越大, 期望之外的异常就越容易被触发. 这种情况下, try/except块将隐藏真正的错误. 
-    #. 使用finally子句来执行那些无论try块中有没有异常都应该被执行的代码. 这对于清理资源常常很有用, 例如关闭文件.
+            Raises:
+                ConnectionError: If no available port is found.
+            """
+            if minimum < 1024:
+                # Note that this raising of ValueError is not mentioned in the doc
+                # string's "Raises:" section because it is not appropriate to
+                # guarantee this specific behavioral reaction to API misuse.
+                raise ValueError(f'Min. port must be at least 1024, not {minimum}.')
+            port = self._find_next_open_port(minimum)
+            if not port:
+                raise ConnectionError(
+                    f'Could not connect to service on port {minimum} or higher.')
+            assert port >= minimum, (
+                f'Unexpected port {port} when minimum was {minimum}.')
+            return port
+
+    No：
+
+    .. code-block:: python
+
+        def connect_to_next_port(self, minimum):
+            """Connects to the next available port.
+
+            Args:
+            minimum: A port value greater or equal to 1024.
+
+            Returns:
+            The new minimum port.
+            """
+            assert minimum >= 1024, 'Minimum port must be at least 1024.'
+            port = self._find_next_open_port(minimum)
+            assert port is not None
+            return port
+
+    #. 模块或包应该定义自己的特定域的异常基类，这个基类应该从内建的 exception 类继承。模块的异常基类后缀应该叫做 ``Error``。
+    #. 永远不要使用 ``except:`` 语句来捕获所有异常，也不要捕获 ``Exception`` 或者 ``StandardError``，除非你打算重新触发该异常，或者你已经在当前线程的最外层（记得还是要打印一条错误消息）。 在异常这方面，Python 非常宽容，``except:`` 真的会捕获包括 Python 语法错误在内的任何错误。使用 ``except:`` 很容易隐藏真正的 bug。 
+    #. 尽量减少 ``try/except`` 块中的代码量。``try`` 块的体积越大，期望之外的异常就越容易被触发。这种情况下， ``try/except`` 块将隐藏真正的错误。 
+    #. 使用 ``finally`` 子句来执行那些无论 ``try`` 块中有没有异常都应该被执行的代码。这对于清理资源常常很有用，例如关闭文件。
 
 全局变量
 --------------------
@@ -204,19 +205,19 @@ Lint
 .. tip::
     避免全局变量
 
-定义:
-    定义在模块级的变量.
+定义：
+    在模块级别或作为类属性声明的变量。
+
+优点：
+    偶尔有用。
     
-优点:
-    偶尔有用. 
+缺点：
+    导入时可能改变模块行为，因为导入模块时会对模块级变量赋值。
     
-缺点:
-    导入时可能改变模块行为, 因为导入模块时会对模块级变量赋值. 
-    
-结论:
-    避免使用全局变量.
-    鼓励使用模块级的常量,例如 ``MAX_HOLY_HANDGRENADE_COUNT = 3``.注意常量命名必须全部大写,用 ``_`` 分隔.具体参见 `命名规则 <https://google.github.io/styleguide/pyguide.html#s3.16-naming>`_
-    若必须要使用全局变量,应在模块内声明全局变量,并在名称前 ``_`` 使之成为模块内部变量.外部访问必须通过模块级的公共函数.具体参见 `命名规则 <>`_
+结论：
+    避免使用全局变量。
+    鼓励使用模块级的常量，例如 ``MAX_HOLY_HANDGRENADE_COUNT = 3``。注意常量命名必须全部大写，用 ``_`` 分隔。具体参见 `命名规则 <https://google-styleguide.readthedocs.io/zh_CN/latest/google-python-styleguide/python_style_rules.html#id21>`_。
+    若必须要使用全局变量，应在模块内声明全局变量，并在名称前 ``_`` 使之成为模块内部变量。外部访问必须通过模块级的公共函数。具体参见 `命名规则 <https://google-styleguide.readthedocs.io/zh_CN/latest/google-python-styleguide/python_style_rules.html#id21>`_。
     
     
 嵌套/局部/内部类或函数
@@ -225,17 +226,17 @@ Lint
 .. tip::
     使用内部类或者嵌套函数可以用来覆盖某些局部变量.
 
-定义:
-    类可以定义在方法, 函数或者类中. 函数可以定义在方法或函数中. 封闭区间中定义的变量对嵌套函数是只读的. (译者注:即内嵌函数可以读外部函数中定义的变量,但是无法改写,除非使用 `nonlocal`)
+定义：
+    类可以定义在方法，函数或者类中。函数可以定义在方法或函数中。封闭区间中定义的变量对嵌套函数是只读的。（译者注：即内嵌函数可以读外部函数中定义的变量，但是无法改写，除非使用 ``nonlocal``）
 
-优点:
-    允许定义仅用于有效范围的工具类和函数.在装饰器中比较常用. 
+优点：
+    允许定义仅用于有效范围的工具类和函数。在装饰器中比较常用。
 
-缺点:
-    嵌套类或局部类的实例不能序列化(pickled). 内嵌的函数和类无法直接测试.同时内嵌函数和类会使外部函数的可读性变差.
+缺点：
+    嵌套类或局部类的实例不能序列化（pickled）。内嵌的函数和类无法直接测试。同时内嵌函数和类会使外部函数的可读性变差。
     
-结论:
-    使用内部类或者内嵌函数可以忽视一些警告.但是应该避免使用内嵌函数或类,除非是想覆盖某些值.若想对模块的用户隐藏某个函数,不要采用嵌套它来隐藏,应该在需要被隐藏的方法的模块级名称加 ``_`` 前缀,这样它依然是可以被测试的.
+结论：
+    使用内部类或者内嵌函数可以忽视一些警告。但是应该避免使用内嵌函数或类，除非是想覆盖某些值。若想对模块的用户隐藏某个函数，不要采用嵌套它来隐藏，而是应该在需要被隐藏的方法的模块级名称加 ``_`` 前缀，这样它依然是可以被测试的。
     
 推导式&生成式
 --------------------------------
@@ -243,19 +244,19 @@ Lint
 .. tip::
     可以在简单情况下使用    
 
-定义:
-    列表,字典和集合的推导&生成式提供了一种简洁高效的方式来创建容器和迭代器, 而不必借助map(), filter(), 或者lambda.(译者注: 元组是没有推导式的, ``()`` 内加类似推导式的句式返回的是个生成器)
+定义：
+    列表，字典和集合的推导与生成式提供了一种简洁高效的方式来创建容器和迭代器，并且不必借助 ``map()``， ``filter()``，或者 ``lambda``。（译者注：元组是没有推导式的，``()`` 内加类似推导式的句式返回的是个生成器）
     
-优点:
-    简单的列表推导可以比其它的列表创建方法更加清晰简单. 生成器表达式可以十分高效, 因为它们避免了创建整个列表. 
+优点：
+    简单的列表推导可以比其它的列表创建方法更加清晰简单。生成器表达式可以十分高效，因为它们避免了创建整个列表。
     
-缺点:
-    复杂的列表推导或者生成器表达式可能难以阅读. 
+缺点：
+    复杂的列表推导或者生成器表达式可能难以阅读。
     
-结论:
-    适用于简单情况. 每个部分应该单独置于一行: 映射表达式, for语句, 过滤器表达式. 禁止多重for语句或过滤器表达式. 复杂情况下还是使用循环.
+结论：
+    适用于简单情况。每个部分应该单独置于一行：映射表达式，``for`` 语句，过滤器表达式。禁止多重 ``for`` 语句或过滤器表达式。复杂情况下建议使用循环。
     
-    Yes:
+    Yes：
 
     .. code-block:: python 
 
@@ -290,38 +291,42 @@ Lint
         eat(jelly_bean for jelly_bean in jelly_beans
             if jelly_bean.color == 'black')    
               
-    No:
+    No：
 
-    .. code-block:: python 
-    
-          result = [(x, y) for x in range(10) for y in range(5) if x * y > 10]
+    .. code-block:: python
 
-          return ((x, y, z)
-                  for x in xrange(5)
-                  for y in xrange(5)
-                  if x != y
-                  for z in xrange(5)
-                  if y != z)
+        result = [complicated_transform(
+                      x, some_argument=x+1)
+                  for x in iterable if predicate(x)]
+
+        result = [(x, y) for x in range(10) for y in range(5) if x * y > 10]
+
+        return ((x, y, z)
+                for x in xrange(5)
+                for y in xrange(5)
+                if x != y
+                for z in xrange(5)
+                if y != z)
               
 默认迭代器和操作符
 --------------------
 
 .. tip::
-    如果类型支持, 就使用默认迭代器和操作符. 比如列表, 字典及文件等.
+    如果类型支持，就使用默认迭代器和操作符。比如列表，字典及文件等。
   
-定义:
-    容器类型, 像字典和列表, 定义了默认的迭代器和关系测试操作符(in和not in)
+定义：
+    容器类型，例如字典和列表，定义了默认的迭代器和关系测试操作符（in 和 not in）。
     
-优点:
-    默认操作符和迭代器简单高效, 它们直接表达了操作, 没有额外的方法调用. 使用默认操作符的函数是通用的. 它可以用于支持该操作的任何类型. 
+优点：
+    默认迭代器和操作符简单高效，它们直接表达了操作，没有额外的方法调用。使用默认操作符的函数是通用的。它可以用于支持该操作的任何类型。
     
-缺点:
-    你没法通过阅读方法名来区分对象的类型(例如, has_key()意味着字典). 不过这也是优点. 
+缺点：
+    你没法通过阅读方法名来区分对象的类型（例如，``has_key()`` 意味着字典）。不过这也是优点。
     
-结论:
-    如果类型支持, 就使用默认迭代器和操作符, 例如列表, 字典和文件. 内建类型也定义了迭代器方法. 优先考虑这些方法, 而不是那些返回列表的方法. 当然，这样遍历容器时，你将不能修改容器. 除非必要,否则不要使用诸如 `dict.iter*()` 这类python2的特定迭代方法.
+结论：
+    如果类型支持，就使用默认迭代器和操作符，例如列表，字典和文件。内建类型也定义了迭代器方法。优先考虑这些方法，而不是那些返回列表的方法。当然，这样遍历容器时，你将不能修改容器。除非必要，否则不要使用诸如 ``dict.iter*()`` 这类 Python2 的特定迭代方法。
 
-    Yes:
+    Yes：
 
     .. code-block:: python
     
@@ -329,21 +334,23 @@ Lint
         if key not in adict: ...
         if obj in alist: ...
         for line in afile: ...
-        for k, v in dict.iteritems(): ...
+        for k, v in adict.items(): ...
+        for k, v in six.iteritems(adict): ...
 
-    No: 
+    No： 
 
     .. code-block:: python 
     
         for key in adict.keys(): ...
         if not adict.has_key(key): ...
         for line in afile.readlines(): ...
+        for k, v in dict.iteritems(): ...
     
 生成器
 --------------------
 
 .. tip::
-    按需使用生成器.
+    按需使用生成器。
 
 定义:
     所谓生成器函数, 就是每当它执行一次生成(yield)语句, 它就返回一个迭代器, 这个迭代器生成一个值. 生成值后, 生成器函数的运行状态将被挂起, 直到下一次生成. 
